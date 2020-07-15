@@ -5,6 +5,8 @@ A simple bunch of programs that decreace number of requsets to weather API.
 Server decreace a number of requests by saving requested data previously.
 if necessary to update data server makes request, saves in directory "Cities" and sends to client.
 
+***All server logs happens in logs.txt file which created by server.***
+
 At first executing server than you can execute client (or/and) clien_gui.
 server available to get requests from multiple clients.
 
@@ -16,8 +18,8 @@ but you can change it while executing as command line argument.
   ./client 4000
  
  ### there may be a need to install certain libraries like ljsonc.
-$ sudo apt instal libjson-c-dev **
-#Build program:
+$ sudo apt instal libjson-c-dev 
+# Build program:
 
 $ make
  everything builds in directory .build
