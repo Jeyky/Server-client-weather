@@ -1,0 +1,279 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather server — server that reduces number of requests to weather API &#8212; weather_server_client  documentation</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="GUI client — to receive weather from server" href="client_gui.html" />
+    <link rel="prev" title="Welcome to weather_server_client’s documentation!" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="client_gui.html" title="GUI client — to receive weather from server"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to weather_server_client’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">weather_server_client  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">weather server — server that reduces number of requests to weather API</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="weather-server-server-that-reduces-number-of-requests-to-weather-api">
+<h1>weather server — server that reduces number of requests to weather API<a class="headerlink" href="#weather-server-server-that-reduces-number-of-requests-to-weather-api" title="Permalink to this headline">¶</a></h1>
+<p>More info to appear here…</p>
+<p>warning: unhandled cursor CursorKind.INCLUSION_DIRECTIVE stdio.h</p>
+<dl class="c function">
+<dt id="c.to_lower">
+void <code class="sig-name descname">to_lower</code><span class="sig-paren">(</span>char *<em>str</em><span class="sig-paren">)</span><a class="headerlink" href="#c.to_lower" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>to_lower() - Lowercase incoming string
+&#64;str: the (char <a href="#id1"><span class="problematic" id="id2">*</span></a>)argument to lowercase.</p>
+<p>We need this function to lowercase input city name, so
+we can save file with city name that will not be repeated.
+for example: (input 1:Kyiv-&gt;kyiv; input 2: KYIV-&gt;kyiv).</p>
+<p>Return: Does not have return.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt id="c.get_time">
+char *<code class="sig-name descname">get_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.get_time" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get_time() - returns current time.</p>
+<p>this function used to show time in server logs.
+time format “DAY.MONTH.YEAR HOURS:MINS:SECONDS”</p>
+<p>Return: returns allocated (char <a href="#id3"><span class="problematic" id="id4">*</span></a>timing) with time. size 20 bytes.</p>
+<p>The return value description can also have multiple paragraphs, and should
+be placed at the end of the comment block.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt id="c.make_log">
+void <code class="sig-name descname">make_log</code><span class="sig-paren">(</span><em class="property">const</em> char *<em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#c.make_log" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>make_log() - Writes message in log.txt file.
+&#64;message: Describe the first argument.</p>
+<p>puts income message with current time in log.txt file.</p>
+<p>Return: Does not have return.</p>
+</dd></dl>
+
+<dl class="c type">
+<dt>
+<code class="sig-name descname">struct string</code></dt>
+<dd><p>struct string - used to save requested data from API.
+&#64;ptr: char pointer.
+&#64;len: length of char array.</p>
+<p>We use this to request data from API using curl/curl.h</p>
+</dd></dl>
+
+<dl class="c type">
+<dt>
+<code class="sig-name descname">struct thread_data</code></dt>
+<dd><p>struct thread_data - passing this info in pthread_create().
+&#64;NewSocket: socket descriptor.
+&#64;buff: our buffer that we used to receive or send data.
+&#64;NewAddr: structure that contains ip and port.
+&#64;Addr_size: addres size;</p>
+<p>We pass this structure in pthread_create to have ability to write
+ip and port of client if he disconnects. Also receive and send
+data without creating new buffer variable.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt id="c.init_string">
+void <code class="sig-name descname">init_string</code><span class="sig-paren">(</span><em class="property">struct</em> string *<em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#c.init_string" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>init_string() - allocates memory for our string structure.
+&#64;s: our string structure to be initialized.</p>
+<p>Allocates memory for our string structure that we use to collect
+requested data from weather API.
+Context: If malloc() failes, logs it in logs.txt and exit the program.</p>
+<p>Return: Does not have return.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt id="c.check_socket">
+void <code class="sig-name descname">check_socket</code><span class="sig-paren">(</span><em class="property">const</em> int <em>val</em>, <em class="property">const</em> char *<em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#c.check_socket" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>check_socket() - logs things related to socket.
+&#64;val: value that returned by socket functions
+&#64;msg: message to log.</p>
+<p>logs sockets creating, binding and listening with current time.</p>
+<p>Context: if socket function that checked with this one returnes error, exit the program.
+Return: Does not have return.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt id="c.create_socket">
+int <code class="sig-name descname">create_socket</code><span class="sig-paren">(</span>int <em>port</em><span class="sig-paren">)</span><a class="headerlink" href="#c.create_socket" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>create_socket() - creates socket.
+&#64;port: socket’s port.</p>
+<p>Creates socket file descriptor with tcp, IPv4 protocols.
+binds socket with address structure and listens. default port
+is 3622 or you can change by passing port in argv[1].</p>
+<p>Context: if socket creating/binding/listening failes exit the program.
+Return: returnes socket file descriptor.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt id="c.add_time">
+void <code class="sig-name descname">add_time</code><span class="sig-paren">(</span>char *<em>buff</em>, int <em>buff_len</em><span class="sig-paren">)</span><a class="headerlink" href="#c.add_time" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>add_time() - adds time argument to JSON requested from weather API.
+&#64;buff: buffer which contains JSON file.
+&#64;buff_len: buffers length..</p>
+<p>Adds time argument that we can compare lately to make decision to
+make new request to weather API or no. thats help to decrease number of
+requests if clients request the same thing, so server does not make requests to API,
+but takes them from own directory and send to clients.</p>
+<p>Return: Doesn’t have return.</p>
+<p>The return value description can also have multiple paragraphs, and should
+be placed at the end of the comment block.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt id="c.cmp_time">
+double <code class="sig-name descname">cmp_time</code><span class="sig-paren">(</span><em class="property">const</em> char *<em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#c.cmp_time" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>cmp_time() - compares current time with time in json file.
+&#64;path: Path to JSON file which we want to compare with.</p>
+<p>A longer description, with more discussion of the function function_name()
+that might be useful to those using or modifying it. Begins with an
+empty comment line, and may include additional embedded empty
+comment lines.</p>
+<p>The longer description may have multiple paragraphs.</p>
+<dl class="simple">
+<dt>Context: Describes whether the function can sleep, what locks it takes,</dt><dd><p>releases, or expects to be held. It can extend over multiple
+lines.</p>
+</dd>
+</dl>
+<p>Return: Describe the return value of function_name.</p>
+<p>The return value description can also have multiple paragraphs, and should
+be placed at the end of the comment block.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt id="c.write_func">
+size_t <code class="sig-name descname">write_func</code><span class="sig-paren">(</span>void *<em>ptr</em>, size_t <em>size</em>, size_t <em>nmemb</em>, <em class="property">struct</em> string *<em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#c.write_func" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>write_func() - set callback for writing received data.
+&#64;ptr: Pointer to the delivered data
+&#64;size: Is always 1.
+&#64;nmemb: Size of that data, number of memory bites.
+&#64;s: pointer to the string data structure.</p>
+<p>This callback function cb() gets called by libcurl as soon as there is
+data received that needs to be saved.</p>
+<p>The longer description may have multiple paragraphs.</p>
+<p>Context: For most transfers, this callback gets called many times and each invoke
+delivers another chunk of data. The data passed to this function will not be null-terminated!
+Return: The number of bytes actually taken care of.</p>
+<p>If that amount differs from the amount passed to your callback function,
+it’ll signal an error condition to the library.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt id="c.curl_request">
+char *<code class="sig-name descname">curl_request</code><span class="sig-paren">(</span><em class="property">const</em> char *<em>buff</em><span class="sig-paren">)</span><a class="headerlink" href="#c.curl_request" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>curl_request() - makes request to weather API.
+&#64;buff: buffer with city name which our client sent.</p>
+<p>Function concatenates given city name with other parts of link
+with which we make request to API. Uses functions from curl library.</p>
+<p>Return: Returns string with JSON data requested from weather API.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt id="c.handle_data">
+void *<code class="sig-name descname">handle_data</code><span class="sig-paren">(</span>void *<em>arg</em><span class="sig-paren">)</span><a class="headerlink" href="#c.handle_data" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>function_name() - receives and sends data.
+&#64;arg: void pointer. We put here structure thread_data.</p>
+<p>Function receives data(city name) in buffer. If received data equals “quit”,
+closes socket and makes log. Else if file with city name exists on server compares
+current time with time written in file. If time difference less than 20 minutes,
+takes JSON file with weather data from it’s own directory “Cities” and sends to client.
+If since last request of this city data passed more than 20 minutes, server makes new request,
+saves new JSON in directory “Cities” and sends JSON to the clients.
+Otherwise (file does not exist on server), server makes request if cod argument from json file
+equals 200(API has info for this city), than creates JSON file in “Cities” and sends JSON to client.
+If code isn’t 200, so this isn’t city or happened some issues with API/connection and server logs it,
+doesn’t save JSON file, but sends JSON to client.</p>
+<p>Return: Returns NULL;</p>
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to weather_server_client’s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="client_gui.html"
+                        title="next chapter">GUI client —  to receive weather from server</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/server.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="client_gui.html" title="GUI client — to receive weather from server"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to weather_server_client’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">weather_server_client  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">weather server — server that reduces number of requests to weather API</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Jeyky.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+    </div>
+  </body>
+</html>
