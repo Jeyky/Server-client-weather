@@ -74,7 +74,7 @@ char *get_time(void)
 	time_t check_time;
 	time(&check_time);
 	struct tm *ct = localtime(&check_time);
-	char *timing = calloc(20,sizeof(char));
+	char *timing = calloc(72,sizeof(char));
 	sprintf(timing, "%d.%d.%d %d:%d:%d", ct->tm_mday,ct->tm_mon,ct->tm_year +1900, ct->tm_hour, ct->tm_min, ct->tm_sec);
 	return timing;
 }

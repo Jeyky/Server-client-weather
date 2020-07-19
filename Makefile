@@ -14,9 +14,13 @@ SRCS = $(TARGET).c
 SRCS_CLIENT = $(TARGET_CLIENT).c
 SRCS_CLIENT_GUI = $(TARGET_CLIENT_GUI).c
 
-CFLAGS = -O2 -Wall -Wextra -Wpedantic $(shell pkg-config --cflags $(LIBS))
+CFLAGS = -O2 -Wall -Wextra -Wpedantic 
 
-LDFLAGS = -lcurl -ljson-c -pthread $(shell pkg-config --libs $(LIBS))
+LDFLAGS = -lcurl -ljson-c -pthread 
+
+CFLAGS_GUI = -O2 -Wall -Wextra -Wpedantic $(shell pkg-config --cflags $(LIBS))
+
+LDFLAGS_GUI = -lcurl -ljson-c $(shell pkg-config --libs $(LIBS))
 
 CC := gcc
 
@@ -30,7 +34,7 @@ $(TARGET): $(BUILDDIR)/$(TARGET)
 $(BUILDDIR)/$(TARGET): $(addprefix $(BUILDDIR)/, $(SRCS:.c=.o))
 	$(CC) $^ $(LDFLAGS) $(CFLAGS)  -o $@
 
-$(BUILDDIR)/$(TARGET).o: $(SERVER_DIR)/$(SRCDIR)/$(TARGET).c $(BUILDDIR)
+$(BUILDDIR)/$(TARGET).o: $(SERVER_DIR)$(SRCDIR)/$(TARGET).c $(BUILDDIR)
 	$(CC) $^ $(CFLAGS) $(LDFLAGS) $(addprefix -I,$(INCDIR)) -c  -o $@
 
 ###################MAKES client.o & client###################
@@ -49,11 +53,11 @@ $(TARGET_CLIENT_GUI): $(BUILDDIR)/$(TARGET_CLIENT_GUI)
 	cp $< $@
 
 $(BUILDDIR)/$(TARGET_CLIENT_GUI): $(addprefix $(BUILDDIR)/,$(SRCS_CLIENT_GUI:.c=.o))
-	$(CC) $^ $(LDFLAGS) $(CFLAGS)  -o $@
+	$(CC) $^ $(LDFLAGS_GUI) $(CFLAGS_GUI)  -o $@
 
 
 $(BUILDDIR)/$(TARGET_CLIENT_GUI).o: $(CLIENT_DIR_GUI)$(SRCDIR)/$(TARGET_CLIENT_GUI).c $(BUILDDIR)
-	$(CC) $^ $(CFLAGS) $(LDFLAGS) $(addprefix -I,$(INCDIR)) -c  -o $@
+	$(CC) $^ $(CFLAGS_GUI) $(LDFLAGS_GUI) $(addprefix -I,$(INCDIR)) -c  -o $@
 
 
 $(BUILDDIR): 
