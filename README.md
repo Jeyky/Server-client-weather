@@ -12,7 +12,7 @@ server available to get requests from multiple clients.
 
 On server and client programs default ip address is 127.0.0.1, default port 3622,
 but you can change it while executing as command line argument.<br />
-**For example:**
+**For example:**<br />
   ./server 4000<br />
   ./client_gui 4000<br />
   ./client 4000<br />
