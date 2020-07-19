@@ -21,6 +21,6 @@ but you can change it while executing as command line argument.
 $ sudo apt instal libjson-c-dev 
 # Build program:
 
-everything builds in directory .build
+everything builds in directory .build <br />
 $ make
 
