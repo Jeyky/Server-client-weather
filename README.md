@@ -22,4 +22,4 @@ $ sudo apt instal libjson-c-dev
 # Build program:
 
 $ make
- everything builds in directory .build
+everything builds in directory .build
